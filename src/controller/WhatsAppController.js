@@ -268,7 +268,39 @@ initEvents(){
     })
     this.el.panelEmojis.querySelectorAll('.emojik').forEach(item =>{
         item.on('click', e=>{
-            console.log('clicou Emoji',item.dataset.unicode)
+           // console.log('clicou Emoji',item.dataset.unicode)
+            let img = this.el.imgEmojiDefault.cloneNode();
+
+            img.style.cssText = item.style.cssText;
+            img.dataset.unicode =  item.dataset.unicode;
+            img.alt = item.dataset.unicode;
+
+            item.classList.forEach(name=>{
+                img.classList.add(name);
+            })
+
+            let cursor = window.getSelection();
+
+            if(!cursor.focusNode ||!cursor.focusNode.id == 'input-text'){
+                this.el.inputText.focus();
+                cursor = window.getSelection();
+            }
+
+            let range = document.createRange();
+            
+            range = cursor.getRangeAt(0);
+            range.deleteContents()
+
+            let frag = document.createDocumentFragment()
+
+            frag.appendChild(img);
+            range.insertNode(frag);
+            range.setStartAfter(img);
+            //range.setEndAfter(img); 
+
+            //this,this.el.inputText.appendChild(img);
+            this.el.inputText.dispatchEvent(new Event('keyup'))
+           // this.el.inputText.focus();
         })
     })
    
