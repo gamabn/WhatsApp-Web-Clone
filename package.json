@@ -11,15 +11,16 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "pdfjs-dist": "^2.2.228",
-    "save": "^2.9.0",
-    "webpack": "^3.1.0",
-    "webpack-dev-server": "^2.5.1"
+    "firebase": "7.14.0",
+    "pdfjs-dist": "^1.5.188",
+    "webpack": "3.1.0",
+    "webpack-dev-server": "2.5.1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-env": "^1.7.0"
+    "babel-core": "6.26.3",
+    "babel-loader": "7.1.5",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-preset-env": "1.7.0",
+    "dotenv": "^16.5.0"
   }
 }

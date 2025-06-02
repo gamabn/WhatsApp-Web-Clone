@@ -1,0 +1,29 @@
+[33mcommit ac1a67e7db58b798008182466aa9817d58102631[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Flavio <lanbinhohouse@gmail.com>
+Date:   Mon May 26 11:30:50 2025 -0300
+
+    finalizando e indo para firebase
+
+[33mcommit d1682b515151ba5b5d0331ec13d634b0c342ed88[m
+Author: Flavio <lanbinhohouse@gmail.com>
+Date:   Tue May 13 14:16:30 2025 -0300
+
+    Remover node_modules do controle de versão
+
+[33mcommit 31a77c9920a1a903c5e0f02a890780616055efba[m
+Author: Flavio <lanbinhohouse@gmail.com>
+Date:   Mon May 12 21:54:04 2025 -0300
+
+    12/05/2025 emojis final
+
+[33mcommit ba93cb1ea02194f24d2e66100673c8e3fd406b3c[m
+Author: Flavio <lanbinhohouse@gmail.com>
+Date:   Sun May 11 12:07:09 2025 -0300
+
+    11/05/2025 emojis
+
+[33mcommit a58ee5bea426bcd67883802e9372aa10fe1634b1[m
+Author: Flavio <lanbinhohouse@gmail.com>
+Date:   Sun May 11 10:36:36 2025 -0300
+
+    commit inicial

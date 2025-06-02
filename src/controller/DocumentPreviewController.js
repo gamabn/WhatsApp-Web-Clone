@@ -1,9 +1,11 @@
 //const pdfjsLib = require('pdfjs-dist/build/pdf.mjs');
-   // const path = require('path') // Não é mais necessário para esta linha
-   const pdfjsLib = require('pdfjs-dist/build/pdf.js');
+// const path = require('path') // Não é mais necessário para esta linha
+import 'pdfjs-dist/build/pdf.js';
+const PDFJS = require('pdfjs-dist');
 
-   // O Webpack irá gerar o worker em 'dist/pdf.worker.bundle.js'
-   pdfjsLib.GlobalWorkerOptions.workerSrc = 'dist/pdf.worker.bundle.js';
+// Configuração do worker
+PDFJS.disableWorker = false;
+PDFJS.workerSrc = '/dist/pdf.worker.bundle.js';
 
 export class DocumentPreviewControler {
 
@@ -39,47 +41,49 @@ export class DocumentPreviewControler {
                 break; 
             
                 case 'application/pdf':
-
-            
-
-                reader.onload = e => {
-                    pdfjsLib.getDocument(new Uint8Array(reader.result)).then(pdf => {
-                        console.log('PDF carregado com sucesso. Número total de páginas:', pdf.numPages);
-                        
-                        pdf.getPage(1).then(page => {
-                            console.log('Primeira página carregada com sucesso');
-                            let viewport = page.getViewport(1);
-                            let canvas = document.createElement('canvas');
-                            let context = canvas.getContext('2d');
-                            canvas.height = viewport.height;
-                            canvas.width = viewport.width;
+                    reader.onload = e => {
+                        try {
+                            let loadingTask = PDFJS.getDocument({
+                                data: reader.result,
+                                nativeImageDecoderSupport: 'none',
+                                disableFontFace: true
+                            });
                             
-                            page.render({
-                                canvasContext: context,
-                                viewport: viewport
-                            }).then(() => {
-                                let _s = (pdf.numPages > 1) ? 's' : '';
-                                let pageIn = `${pdf.numPages} página${_s}`;
-                                console.log('Renderização concluída. Informação de páginas:', pageIn);
-                                
-                                s({
-                                    src: canvas.toDataURL('image/png'),
-                                    info: pageIn
+                            loadingTask.then(pdf => {
+                                pdf.getPage(1).then(page => {
+                                    let viewport = page.getViewport(1.0);
+                                    let canvas = document.createElement('canvas');
+                                    let context = canvas.getContext('2d');
+                                    canvas.height = viewport.height;
+                                    canvas.width = viewport.width;
+                                    
+                                    page.render({
+                                        canvasContext: context,
+                                        viewport: viewport
+                                    }).then(() => {
+                                        let _s = (pdf.numPages > 1) ? 's' : '';
+                                        s({
+                                            src: canvas.toDataURL('image/png'),
+                                            info: `${pdf.numPages} página${_s}`
+                                        });
+                                    }).catch(err => {
+                                        console.error('Erro na renderização:', err);
+                                        f(err);
+                                    });
+                                }).catch(err => {
+                                    console.error('Erro ao carregar página:', err);
+                                    f(err);
                                 });
                             }).catch(err => {
-                                console.error('Erro na renderização:', err);
+                                console.error('Erro ao carregar PDF:', err);
                                 f(err);
                             });
-                        }).catch(err => {
-                            console.error('Erro ao carregar página:', err);
+                        } catch (err) {
+                            console.error('Erro ao processar PDF:', err);
                             f(err);
-                        });
-                    }).catch(err => {
-                        console.error('Erro ao carregar PDF:', err);
-                        f(err);
-                    });
-                }
-                reader.readAsArrayBuffer(this._file)
+                        }
+                    }
+                    reader.readAsArrayBuffer(this._file)
 
 
                  break;
